@@ -10,7 +10,7 @@ use Spryker\Shared\Library\Config;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Shared\Mail\MailConstants;
 
-class MailDependencyContainer extends AbstractBusinessFactory
+class MailBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
