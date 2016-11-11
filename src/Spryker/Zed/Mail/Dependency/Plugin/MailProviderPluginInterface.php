@@ -5,28 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Mail\Business;
+namespace Spryker\Zed\Mail\Dependency\Plugin;
 
 use Generated\Shared\Transfer\MailTransfer;
 
-interface MailFacadeInterface
+interface MailProviderPluginInterface
 {
 
     /**
      * Specification:
-     * - Prepares the mail before send
-     * - Builds the needed MailTransfer by given MailType specification
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return void
-     */
-    public function handleMail(MailTransfer $mailTransfer);
-
-    /**
-     * Specification:
+     * - Receives the fully configured MailTransfer
      * - Sends the mail
      *
      * @api

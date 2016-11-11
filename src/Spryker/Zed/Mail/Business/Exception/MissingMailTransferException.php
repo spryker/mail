@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Mail;
+namespace Spryker\Zed\Mail\Business\Exception;
 
-interface MailConstants
+use Exception;
+
+class MissingMailTransferException extends Exception
 {
-
-    const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
-
 }
