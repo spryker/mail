@@ -45,7 +45,8 @@ class SwiftMailer implements MailProviderPluginInterface
             ->addSubject($mailTransfer)
             ->addFrom($mailTransfer)
             ->addTo($mailTransfer)
-            ->addContent($mailTransfer);
+            ->addContent($mailTransfer)
+            ->addAttachments($mailTransfer);
 
         $this->mailer->send();
     }
@@ -112,5 +113,17 @@ class SwiftMailer implements MailProviderPluginInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $transfer
+     *
+     * @return void
+     */
+    protected function addAttachments(MailTransfer $mailTransfer): void
+    {
+        foreach ($mailTransfer->getAttachments() as $attachment) {
+            $this->mailer->addAttachment($attachment->getAttachmentUrl());
+        }
     }
 }

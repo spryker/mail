@@ -88,4 +88,14 @@ class MailToMailerBridge implements MailToMailerInterface
     {
         $this->mailer->send($this->message);
     }
+
+    /**
+     * @param string $attachment
+     *
+     * @return void
+     */
+    public function addAttachment(string $attachment): void
+    {
+        $this->message->attach(\Swift_Attachment::fromPath($attachment));
+    }
 }
