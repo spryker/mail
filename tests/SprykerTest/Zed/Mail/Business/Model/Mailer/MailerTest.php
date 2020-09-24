@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Mail\Business\Model\Mailer;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
+use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
 use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
@@ -18,6 +19,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Mail
@@ -34,7 +36,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailTypeCollectionMock = $this->getMailTypeCollectionMock();
@@ -48,7 +50,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillDoNothingWhenMailTypeNotInCollection()
+    public function testHandleMailWillDoNothingWhenMailTypeNotInCollection(): void
     {
         $mailerMock = $this->getMailerWhichIsNotExecuted();
         $mailTransfer = $this->getMailTransfer();
@@ -59,7 +61,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillCallBuildOnMailTypeWhenMailTypeInCollection()
+    public function testHandleMailWillCallBuildOnMailTypeWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
@@ -71,7 +73,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillCallSendOnProviderWhenMailTypeInCollection()
+    public function testHandleMailWillCallSendOnProviderWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
@@ -81,9 +83,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mailer\MailHandler
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mailer\MailHandler
      */
-    protected function getMailerWhichIsNotExecuted()
+    protected function getMailerWhichIsNotExecuted(): MailHandler
     {
         $mailTypeCollectionMock = $this->getMockBuilder(MailHandler::class)
             ->setMethods(['buildMail', 'sendMail'])
@@ -101,9 +103,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
-    protected function getMailTypeCollectionMock()
+    protected function getMailTypeCollectionMock(): MailTypeCollectionGetInterface
     {
         $mailTypeCollectionMock = $this->getMockBuilder(MailTypeCollectionGetInterface::class)->setMethods(['has', 'get'])->getMock();
 
@@ -111,9 +113,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
-    protected function getMailTypeCollectionWithoutMailMock()
+    protected function getMailTypeCollectionWithoutMailMock(): MailTypeCollectionGetInterface
     {
         $mailTypeCollectionMock = $this->getMailTypeCollectionMock();
         $mailTypeCollectionMock->expects($this->once())->method('has')->willReturn(false);
@@ -122,9 +124,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
-    protected function getMailTypeCollectionWithMailMock()
+    protected function getMailTypeCollectionWithMailMock(): MailTypeCollectionGetInterface
     {
         $mailTypeCollectionMock = $this->getMailTypeCollectionMock();
         $mailTypeCollectionMock->expects($this->once())->method('has')->willReturn(true);
@@ -134,9 +136,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
-    protected function getMailProviderCollectionMock()
+    protected function getMailProviderCollectionMock(): MailProviderCollectionGetInterface
     {
         $mailProviderCollectionMock = $this->getMockBuilder(MailProviderCollectionGetInterface::class)->setMethods(['getProviderForMailType'])->getMock();
 
@@ -144,9 +146,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface
      */
-    protected function getMailProviderCollectionWithProviderMock()
+    protected function getMailProviderCollectionWithProviderMock(): MailProviderCollectionGetInterface
     {
         $mailProviderCollectionMock = $this->getMailProviderCollectionMock();
         $mailProviderCollectionMock->expects($this->once())->method('getProviderForMailType')->willReturn(
@@ -159,7 +161,7 @@ class MailerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function getMailTransfer()
+    protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(self::MAIL_TYPE_A);
@@ -168,9 +170,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
-    protected function getProviderMock()
+    protected function getProviderMock(): MailProviderPluginInterface
     {
         $providerMock = $this->getMockBuilder(MailProviderPluginInterface::class)->setMethods(['sendMail'])->getMock();
 
@@ -178,9 +180,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
      */
-    protected function getMailBuilderMock()
+    protected function getMailBuilderMock(): MailBuilderInterface
     {
         $mailBuilderMock = $this->getMockBuilder(MailBuilder::class)->setMethods(['build'])->disableOriginalConstructor()->getMock();
         $mailBuilderMock->method('build')->willReturn($this->getMailTransfer());
@@ -189,9 +191,9 @@ class MailerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
-    protected function getMailTypeMock()
+    protected function getMailTypeMock(): MailTypePluginInterface
     {
         $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['build', 'getName'])->getMock();
         $mailTypeMock->expects($this->once())->method('build');
