@@ -32,12 +32,6 @@ interface MailToMailerInterface
      */
     public function addTo($email, $name = null);
 
-    /**
-     * @param string $email
-     * @param string|null $name
-     *
-     * @return void
-     */
     public function addBcc(string $email, ?string $name = null): void;
 
     /**
@@ -59,10 +53,5 @@ interface MailToMailerInterface
      */
     public function send();
 
-    /**
-     * @param string $attachmentUrl
-     *
-     * @return void
-     */
     public function attach(string $attachmentUrl): void;
 }

@@ -89,11 +89,6 @@ class MailHandler implements MailHandlerInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return \Generated\Shared\Transfer\MailTransfer
-     */
     protected function setDefaultSender(MailTransfer $mailTransfer): MailTransfer
     {
         $mailSenderTransfer = (new MailSenderTransfer())

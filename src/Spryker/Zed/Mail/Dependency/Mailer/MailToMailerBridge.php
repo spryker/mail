@@ -63,12 +63,6 @@ class MailToMailerBridge implements MailToMailerInterface
         $this->message->addTo($email, $name);
     }
 
-    /**
-     * @param string $email
-     * @param string|null $name
-     *
-     * @return void
-     */
     public function addBcc(string $email, ?string $name = null): void
     {
         $this->message->addBcc($email, $name);
@@ -102,11 +96,6 @@ class MailToMailerBridge implements MailToMailerInterface
         $this->mailer->send($this->message);
     }
 
-    /**
-     * @param string $attachmentUrl
-     *
-     * @return void
-     */
     public function attach(string $attachmentUrl): void
     {
         $this->message->attach(Swift_Attachment::fromPath($attachmentUrl));

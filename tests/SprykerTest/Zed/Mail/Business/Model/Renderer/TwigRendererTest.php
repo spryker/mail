@@ -43,9 +43,6 @@ class TwigRendererTest extends Unit
      */
     public const INDEX_OF_TEMPLATE_HTML = 1;
 
-    /**
-     * @return void
-     */
     public function testHydrateMailCallsTwigsRenderMethodWithTextTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
@@ -60,9 +57,6 @@ class TwigRendererTest extends Unit
         $this->assertSame('TextTemplate', $mailTemplateTextTransfer->getContent());
     }
 
-    /**
-     * @return void
-     */
     public function testHydrateMailCallsTwigsRenderMethodWithHtmlTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
@@ -94,9 +88,6 @@ class TwigRendererTest extends Unit
         return $rendererBridge;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MailTransfer
-     */
     protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
@@ -110,27 +101,16 @@ class TwigRendererTest extends Unit
         return $mailTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MailTemplateTransfer
-     */
     protected function getMailTemplateTransferText(): MailTemplateTransfer
     {
         return $this->getMailTemplateTransfer(false);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MailTemplateTransfer
-     */
     protected function getMailTemplateTransferHtml(): MailTemplateTransfer
     {
         return $this->getMailTemplateTransfer(true);
     }
 
-    /**
-     * @param bool $isHtml
-     *
-     * @return \Generated\Shared\Transfer\MailTemplateTransfer
-     */
     protected function getMailTemplateTransfer(bool $isHtml): MailTemplateTransfer
     {
         $mailTemplateTransfer = new MailTemplateTransfer();

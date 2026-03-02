@@ -26,10 +26,6 @@ class SwiftMailer implements SwiftMailerInterface
      */
     protected $mailer;
 
-    /**
-     * @param \Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface $renderer
-     * @param \Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface $mailer
-     */
     public function __construct(RendererInterface $renderer, MailToMailerInterface $mailer)
     {
         $this->renderer = $renderer;
@@ -135,11 +131,6 @@ class SwiftMailer implements SwiftMailerInterface
         return $this;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return void
-     */
     protected function addAttachments(MailTransfer $mailTransfer): void
     {
         foreach ($mailTransfer->getAttachments() as $attachment) {

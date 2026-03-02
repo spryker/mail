@@ -38,11 +38,6 @@ class MailBuilder implements MailBuilderInterface
      */
     protected $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Zed\Mail\MailConfig $mailConfig
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         MailToGlossaryInterface $glossaryFacade,
         MailConfig $mailConfig,

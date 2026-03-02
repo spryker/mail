@@ -33,10 +33,6 @@ class TwigRenderer implements RendererInterface
      */
     protected $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface $renderer
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         MailToRendererInterface $renderer,
         MailToLocaleFacadeInterface $localeFacade

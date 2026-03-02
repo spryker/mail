@@ -29,9 +29,6 @@ class MailBusinessTester extends Actor
 {
     use _generated\MailBusinessTesterActions;
 
-    /**
-     * @return \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
-     */
     public function getLocaleFacade(): MailToLocaleFacadeInterface
     {
         return new MailToLocaleFacadeBridge($this->getLocator()->locale()->facade());

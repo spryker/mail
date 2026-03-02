@@ -83,9 +83,6 @@ class SwiftMailerTest extends Unit
      */
     protected const MAIL_ATTACHMENT_URL = 'http://mail-attachment-url';
 
-    /**
-     * @return void
-     */
     public function testInstantiation(): void
     {
         $rendererMock = $this->getRendererMock();
@@ -95,9 +92,6 @@ class SwiftMailerTest extends Unit
         $this->assertInstanceOf(SwiftMailerInterface::class, $swiftMailer);
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailAddSubjectToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
@@ -107,9 +101,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($this->getMailTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailAddsSenderToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
@@ -119,9 +110,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($this->getMailTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailAddRecipientToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
@@ -157,9 +145,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($mailTransfer);
     }
 
-    /**
-     * @return array
-     */
     public function provideBccs(): array
     {
         return [
@@ -193,9 +178,6 @@ class SwiftMailerTest extends Unit
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailExpectsBccEmail(): void
     {
         // Assign
@@ -213,9 +195,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($mailTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailAddHtmlContentToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
@@ -225,9 +204,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($this->getMailTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testSendMailAddTextContentToMessage(): void
     {
         $mailerMock = $this->getMailerMock();
@@ -264,9 +240,6 @@ class SwiftMailerTest extends Unit
         $swiftMailer->sendMail($mailTransfer);
     }
 
-    /**
-     * @return array
-     */
     public function sendMailAddsAttachmentsDataProvider(): array
     {
         return [
@@ -306,9 +279,6 @@ class SwiftMailerTest extends Unit
         return $rendererMock;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\MailTransfer
-     */
     protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
@@ -366,11 +336,6 @@ class SwiftMailerTest extends Unit
         return $mailerMock;
     }
 
-    /**
-     * @param \Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface $mailerMock
-     *
-     * @return \Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer
-     */
     protected function getSwiftMailerWithMocks(MailToMailerInterface $mailerMock): SwiftMailer
     {
         $renderMock = $this->getRendererMock();

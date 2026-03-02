@@ -31,9 +31,6 @@ class MailTypeCollectionTest extends Unit
      */
     public const MAIL_TYPE_A = 'mail type a';
 
-    /**
-     * @return void
-     */
     public function testAddMailTypeReturnFluentInterface(): void
     {
         $mailTypeCollection = $this->getMailCollection();
@@ -42,9 +39,6 @@ class MailTypeCollectionTest extends Unit
         $this->assertInstanceOf(MailTypeCollection::class, $mailTypeCollection->add($mailTypeMock));
     }
 
-    /**
-     * @return void
-     */
     public function testHasShouldReturnFalseWhenMailTypeNotInCollection(): void
     {
         $mailTypeCollection = $this->getMailCollection();
@@ -52,9 +46,6 @@ class MailTypeCollectionTest extends Unit
         $this->assertFalse($mailTypeCollection->has(static::MAIL_TYPE_A));
     }
 
-    /**
-     * @return void
-     */
     public function testHasShouldReturnTrueWhenMailTypeInCollection(): void
     {
         $mailTypeMock = $this->getMailTypeMock();
@@ -64,9 +55,6 @@ class MailTypeCollectionTest extends Unit
         $this->assertTrue($mailTypeCollection->has(static::MAIL_TYPE_A));
     }
 
-    /**
-     * @return void
-     */
     public function testGetByMailTypeShouldReturnMailTypeWhenMailTypeInCollection(): void
     {
         $mailTypeMock = $this->getMailTypeMock();
@@ -76,9 +64,6 @@ class MailTypeCollectionTest extends Unit
         $this->assertInstanceOf(MailTypePluginInterface::class, $mailTypeCollection->get(static::MAIL_TYPE_A));
     }
 
-    /**
-     * @return void
-     */
     public function testGetByMailTypeShouldThrowExceptionWhenMailTypeNotInCollection(): void
     {
         $mailTypeCollection = $this->getMailCollection();
@@ -87,9 +72,6 @@ class MailTypeCollectionTest extends Unit
         $mailTypeCollection->get(static::MAIL_TYPE_A);
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection
-     */
     protected function getMailCollection(): MailTypeCollection
     {
         return new MailTypeCollection();

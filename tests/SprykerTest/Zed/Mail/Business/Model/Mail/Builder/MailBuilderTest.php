@@ -71,9 +71,6 @@ class MailBuilderTest extends Unit
      */
     protected const BCC_NAME = 'bccName';
 
-    /**
-     * @return void
-     */
     public function testInstantiation(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -81,9 +78,6 @@ class MailBuilderTest extends Unit
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder);
     }
 
-    /**
-     * @return void
-     */
     public function testSetMailTransferWillReturnFluentInterface(): void
     {
         $mailTransfer = new MailTransfer();
@@ -92,9 +86,6 @@ class MailBuilderTest extends Unit
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setMailTransfer($mailTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testGetMailTransferWillReturnMailTransfer(): void
     {
         $mailTransfer = new MailTransfer();
@@ -104,9 +95,6 @@ class MailBuilderTest extends Unit
         $this->assertInstanceOf(MailTransfer::class, $mailBuilder->getMailTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testGetMailTransferWillThrowExceptionWhenMailTransferNotSet(): void
     {
         $this->expectException(MissingMailTransferException::class);
@@ -115,9 +103,6 @@ class MailBuilderTest extends Unit
         $mailBuilder->getMailTransfer();
     }
 
-    /**
-     * @return void
-     */
     public function testSetSubjectWillSetSubjectOnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -126,27 +111,18 @@ class MailBuilderTest extends Unit
         $this->assertSame(static::SUBJECT, $mailBuilder->getMailTransfer()->getSubject());
     }
 
-    /**
-     * @return void
-     */
     public function testSetSubjectWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSubject(static::SUBJECT));
     }
 
-    /**
-     * @return void
-     */
     public function testSetHtmlTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setHtmlTemplate(static::TEMPLATE_NAME_HTML));
     }
 
-    /**
-     * @return void
-     */
     public function testSetHtmlTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -155,18 +131,12 @@ class MailBuilderTest extends Unit
         $this->assertContainsOnly(MailTemplateTransfer::class, $mailBuilder->getMailTransfer()->getTemplates());
     }
 
-    /**
-     * @return void
-     */
     public function testSetTextTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setTextTemplate(static::TEMPLATE_NAME_TEXT));
     }
 
-    /**
-     * @return void
-     */
     public function testSetTextTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -175,18 +145,12 @@ class MailBuilderTest extends Unit
         $this->assertContainsOnly(MailTemplateTransfer::class, $mailBuilder->getMailTransfer()->getTemplates());
     }
 
-    /**
-     * @return void
-     */
     public function testSetSenderWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSender(static::EMAIL, static::NAME));
     }
 
-    /**
-     * @return void
-     */
     public function testSetSenderWillSetSenderTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -195,18 +159,12 @@ class MailBuilderTest extends Unit
         $this->assertInstanceOf(MailSenderTransfer::class, $mailBuilder->getMailTransfer()->getSender());
     }
 
-    /**
-     * @return void
-     */
     public function testAddRecipientWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->addRecipient(static::EMAIL, static::NAME));
     }
 
-    /**
-     * @return void
-     */
     public function testAddRecipientWillAddMailRecipientTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -215,9 +173,6 @@ class MailBuilderTest extends Unit
         $this->assertContainsOnly(MailRecipientTransfer::class, $mailBuilder->getMailTransfer()->getRecipients());
     }
 
-    /**
-     * @return void
-     */
     public function testAddRecipientBccAddsBccToMailTransfer(): void
     {
         // Assign
@@ -232,9 +187,6 @@ class MailBuilderTest extends Unit
         $this->assertSame($expectedBccCount, $actualBccCount);
     }
 
-    /**
-     * @return void
-     */
     public function testBuildWillReturnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -242,9 +194,6 @@ class MailBuilderTest extends Unit
         $this->assertInstanceOf(MailTransfer::class, $mailBuilder->build());
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
-     */
     protected function getMailBuilderWithoutMailTransfer(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
@@ -257,9 +206,6 @@ class MailBuilderTest extends Unit
         return $mailBuilder;
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
-     */
     protected function getMailBuilder(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();

@@ -126,9 +126,6 @@ class MailBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(MailDependencyProvider::MAILER);
     }
 
-    /**
-     * @return \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
-     */
     public function getLocaleFacade(): MailToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MailDependencyProvider::FACADE_LOCALE);
