@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
 use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
 use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
 use Spryker\Zed\Mail\MailDependencyProvider;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 
 /**
  * @method \Spryker\Zed\Mail\MailConfig getConfig()
@@ -31,6 +32,7 @@ class MailBusinessFactory extends AbstractBusinessFactory
             $this->getMailProviderCollection(),
             $this->getMailTypeBuilderPlugins(),
             $this->getConfig(),
+            $this->getMessengerFacade(),
         );
     }
 
@@ -129,5 +131,10 @@ class MailBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): MailToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MailDependencyProvider::FACADE_LOCALE);
+    }
+
+    public function getMessengerFacade(): MessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(MailDependencyProvider::FACADE_MESSENGER);
     }
 }

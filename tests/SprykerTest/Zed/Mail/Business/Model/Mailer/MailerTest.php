@@ -17,6 +17,7 @@ use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 use Spryker\Zed\Mail\MailConfig;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -49,6 +50,7 @@ class MailerTest extends Unit
             $mailProviderCollectionMock,
             [],
             $this->getMailConfigMock(),
+            $this->getMessengerFacadeMock(),
         );
 
         $this->assertInstanceOf(MailHandler::class, $instance);
@@ -71,6 +73,7 @@ class MailerTest extends Unit
             $this->getMailProviderCollectionWithProviderMock(),
             [],
             $this->getMailConfigMock(),
+            $this->getMessengerFacadeMock(),
         );
         $mailTransfer = $this->getMailTransfer();
 
@@ -86,6 +89,7 @@ class MailerTest extends Unit
             $this->getMailProviderCollectionWithProviderMock(),
             [],
             $this->getMailConfigMock(),
+            $this->getMessengerFacadeMock(),
         );
         $mailTransfer = $this->getMailTransfer();
 
@@ -105,6 +109,7 @@ class MailerTest extends Unit
                 $this->getMailProviderCollectionMock(),
                 [],
                 $this->getMailConfigMock(),
+                $this->getMessengerFacadeMock(),
             ])
             ->getMock();
 
@@ -218,5 +223,10 @@ class MailerTest extends Unit
         return $this->getMockBuilder(MailConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    protected function getMessengerFacadeMock(): MessengerFacadeInterface
+    {
+        return $this->getMockBuilder(MessengerFacadeInterface::class)->getMock();
     }
 }

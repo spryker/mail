@@ -7,15 +7,26 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Mailer;
 
+use Generated\Shared\Transfer\MailResponseTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\MailConfig;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
+use Throwable;
 
 class MailHandler implements MailHandlerInterface
 {
+    use LoggerTrait;
+
+    protected const string LOG_MESSAGE_MAIL_SEND_FAILED = 'Email sending failed. Error code: %s. Mail type: %s. Sender: %s. Recipients: %s. Exception: %s';
+
+    protected const string GLOSSARY_KEY_MAIL_SEND_FAILED = 'mail.error.send_failed';
+
     /**
      * @var \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface
      */
@@ -43,6 +54,8 @@ class MailHandler implements MailHandlerInterface
      */
     protected $config;
 
+    protected MessengerFacadeInterface $messengerFacade;
+
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      * @param \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface $mailCollection
@@ -55,13 +68,15 @@ class MailHandler implements MailHandlerInterface
         MailTypeCollectionGetInterface $mailCollection,
         MailProviderCollectionGetInterface $mailProviderCollection,
         array $mailTypeBuilderPlugins,
-        MailConfig $config
+        MailConfig $config,
+        MessengerFacadeInterface $messengerFacade,
     ) {
         $this->mailBuilder = $mailBuilder;
         $this->mailTypeCollection = $mailCollection;
         $this->mailProviderCollection = $mailProviderCollection;
         $this->mailTypeBuilderPlugins = $mailTypeBuilderPlugins;
         $this->config = $config;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -152,8 +167,48 @@ class MailHandler implements MailHandlerInterface
         $mailProviders = $this->getMailProviderByMailType($mailTransfer);
 
         foreach ($mailProviders as $provider) {
-            $provider->sendMail($mailTransfer);
+            try {
+                $provider->sendMail($mailTransfer);
+            } catch (Throwable $throwable) {
+                $this->handleMailSendFailure($mailTransfer, $throwable);
+            }
         }
+    }
+
+    protected function handleMailSendFailure(MailTransfer $mailTransfer, Throwable $throwable): void
+    {
+        $recipientEmails = [];
+        foreach ($mailTransfer->getRecipients() as $recipientTransfer) {
+            $recipientEmails[] = $recipientTransfer->getEmail() ?? '';
+        }
+
+        $this->getLogger()->error(sprintf(
+            static::LOG_MESSAGE_MAIL_SEND_FAILED,
+            $throwable->getCode(),
+            $mailTransfer->getType() ?? '',
+            $mailTransfer->getSender() ? $mailTransfer->getSender()->getEmail() ?? '' : '',
+            implode(', ', $recipientEmails),
+            $throwable->getMessage(),
+        ));
+
+        $mailTransfer->setMailResponse(
+            (new MailResponseTransfer())->setIsSuccess(false),
+        );
+
+        if (!$this->isMessengerNotificationEnabled()) {
+            return;
+        }
+
+        $this->messengerFacade->addErrorMessage(
+            (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_MAIL_SEND_FAILED)
+                ->setParameters(['%errorCode%' => $throwable->getCode()]),
+        );
+    }
+
+    protected function isMessengerNotificationEnabled(): bool
+    {
+        return PHP_SAPI !== 'cli';
     }
 
     /**

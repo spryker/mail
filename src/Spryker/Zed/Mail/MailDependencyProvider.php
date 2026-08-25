@@ -80,6 +80,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGINS_MAIL_TYPE_BUILDER = 'PLUGINS_MAIL_TYPE_BUILDER';
 
+    public const string FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -95,6 +97,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMailer($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addMailTypeBuilderPlugins($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
@@ -275,5 +278,14 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     protected function getMailTypeBuilderPlugins(): array
     {
         return [];
+    }
+
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
+            return $container->getLocator()->messenger()->facade();
+        });
+
+        return $container;
     }
 }
