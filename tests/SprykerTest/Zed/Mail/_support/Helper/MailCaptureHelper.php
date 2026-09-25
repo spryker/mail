@@ -57,6 +57,17 @@ class MailCaptureHelper extends Module
     }
 
     /**
+     * Makes every further send in the running test throw, so a resource declaring a send-failure
+     * response can be driven into it. Flipping the registered provider rather than swapping the
+     * collection is what makes this work after a fixture has already mailed - see
+     * {@see \SprykerTest\Zed\Mail\Helper\CapturingMailProviderPlugin}.
+     */
+    public function arrangeFailingMailTransport(): void
+    {
+        $this->capturingMailProviderPlugin->failNextSends();
+    }
+
+    /**
      * @return array<\Generated\Shared\Transfer\MailTransfer>
      */
     public function getSentMails(): array
