@@ -12,6 +12,7 @@
         <property name="headers" type="MailHeader[]" singular="header"/>
         <property name="attachments" type="MailAttachment[]" singular="attachment"/>
         <property name="locale" type="Locale"/>
+        <property name="mailResponse" type="MailResponse"/>
     </transfer>
 
     <transfer name="MailAttachment">

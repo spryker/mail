@@ -8,11 +8,15 @@
 namespace Spryker\Zed\Mail\Business\Model\Provider;
 
 use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\Mail\Business\Exception\SwiftMailerRemovedException;
 use Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface;
 
 /**
- * @deprecated Will be removed without replacement.
+ * `swiftmailer/swiftmailer` is abandoned and no longer a dependency of this module. The class is
+ * kept so that existing type declarations and plugin registrations keep resolving; sending throws.
+ *
+ * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\Communication\Plugin\Mail\SymfonyMailerProviderPlugin} instead.
  */
 class SwiftMailer implements SwiftMailerInterface
 {
@@ -35,19 +39,13 @@ class SwiftMailer implements SwiftMailerInterface
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
+     * @throws \Spryker\Zed\Mail\Business\Exception\SwiftMailerRemovedException
+     *
      * @return void
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
-        $this
-            ->addSubject($mailTransfer)
-            ->addFrom($mailTransfer)
-            ->addTo($mailTransfer)
-            ->addBcc($mailTransfer)
-            ->addContent($mailTransfer)
-            ->addAttachments($mailTransfer);
-
-        $this->mailer->send();
+        throw SwiftMailerRemovedException::forMember(static::class . '::sendMail()');
     }
 
     /**

@@ -12,15 +12,12 @@ use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Mail\Business\Exception\SwiftMailerRemovedException;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryBridge;
 use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeBridge;
-use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_SmtpTransport;
 
 /**
  * @method \Spryker\Zed\Mail\MailConfig getConfig()
@@ -214,20 +211,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSwiftMailer(Container $container): Container
     {
         $container->set(static::SWIFT_MAILER, function () {
-            $transport = new Swift_SmtpTransport(
-                $this->getConfig()->getSmtpHost(),
-                $this->getConfig()->getSmtpPort(),
-                $this->getConfig()->getSmtpEncryption(),
-            );
-
-            if ($this->getConfig()->getSmtpAuthMode() !== '') {
-                $transport
-                    ->setAuthMode($this->getConfig()->getSmtpAuthMode())
-                    ->setUsername($this->getConfig()->getSmtpUsername())
-                    ->setPassword($this->getConfig()->getSmtpPassword());
-            }
-
-            return new Swift_Mailer($transport);
+            throw SwiftMailerRemovedException::forMember(static::class . '::addSwiftMailer()');
         });
 
         return $container;
@@ -243,10 +227,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     protected function addMailer(Container $container)
     {
         $container->set(static::MAILER, $container->factory(function (Container $container) {
-            $message = new Swift_Message();
-            $swiftMailer = $container->get(static::SWIFT_MAILER);
-
-            return new MailToMailerBridge($message, $swiftMailer);
+            throw SwiftMailerRemovedException::forMember(static::class . '::addMailer()');
         }));
 
         return $container;
